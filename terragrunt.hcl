@@ -12,6 +12,8 @@ generate "provider" {
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
 provider "oci" {
+  #tenancy_ocid = "ocid1.tenancy.oc1..aaaaaaaa3roehpairwhfhzenxbmofim6ies4h7cvcowbzv26ia3oiq47ygga"
+  #user_ocid    = "ocid1.user.oc1..aaaaaaaa7fcbiowrdo4fcy37c6wqbwfewzhc4tinkbfh6zdethvk4ht7lgzq"
   region       = "${local.region}"
   # tenancy_ocid, user_ocid, fingerprint and private_key_path or private_key variables must be declared as environment variables
 }
@@ -23,14 +25,15 @@ remote_state {
   backend = "s3"
   config = {
     bucket                      = local.os_bucket_name
-    key                         = "${replace(path_relative_to_include(), "/", "%2F")}%2Fterraform.tfstate"
+    key                         = "${path_relative_to_include()}/terraform.tfstate"
     region                      = local.region
-    endpoint                    = "https://frvn5ignckvl.compat.objectstorage.eu-frankfurt-1.oraclecloud.com"
-    shared_credentials_file     = "./s3.credentials"
+    endpoint                    = "https://${local.os_namespace}.compat.objectstorage.${local.region}.oraclecloud.com"
+    encrypt                     = true
     skip_region_validation      = true
     skip_credentials_validation = true
     skip_metadata_api_check     = true
     force_path_style            = true
+    # AWS... must be declared as environment variables
   }
   generate = {
     path      = "backend.tf"
