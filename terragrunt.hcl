@@ -12,8 +12,6 @@ generate "provider" {
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
 provider "oci" {
-  #tenancy_ocid = "ocid1.tenancy.oc1..aaaaaaaa3roehpairwhfhzenxbmofim6ies4h7cvcowbzv26ia3oiq47ygga"
-  #user_ocid    = "ocid1.user.oc1..aaaaaaaa7fcbiowrdo4fcy37c6wqbwfewzhc4tinkbfh6zdethvk4ht7lgzq"
   region       = "${local.region}"
   # tenancy_ocid, user_ocid, fingerprint and private_key_path or private_key variables must be declared as environment variables
 }
@@ -33,7 +31,7 @@ remote_state {
     skip_credentials_validation = true
     skip_metadata_api_check     = true
     force_path_style            = true
-    # AWS... must be declared as environment variables
+    # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY variables must be declared as environment variables
   }
   generate = {
     path      = "backend.tf"
