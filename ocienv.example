@@ -1,3 +1,9 @@
+## IMPORTANT!!
+## This is an example file and you should copy it to ocienv file which is excluded in .gitignore.
+## This ocienv can contain sensible data so it should NEVER be uploaded to remote repository.
+## ocienv loads the needed environment variables to connect to OCI and it is used to execute local tests.
+
+
 # API Key fingerprint: OCI Console > Identity > Users > API Keys
 export TF_VAR_fingerprint=xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx
 
