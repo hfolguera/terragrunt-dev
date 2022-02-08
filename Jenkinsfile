@@ -23,7 +23,7 @@ pipeline {
     stage('Init'){
       steps {
         ansiColor('xterm') {
-          withCredentials([usernameColonPassword(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'), usernameColonPassword(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+          withCredentials([usernamePassword(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'), usernamePassword(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
             sh 'terragrunt run-all init --terragrunt-non-interactive'
           }
         }
