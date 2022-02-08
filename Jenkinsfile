@@ -22,7 +22,8 @@ pipeline {
   stages {
     stage('Init'){
       steps {
-        sh 'cd dev'
+        sh 'env | grep TF_'
+        sh 'env | grep AWS'
         sh 'terragrunt run-all init --terragrunt-non-interactive'
       }
     }
