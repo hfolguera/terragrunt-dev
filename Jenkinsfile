@@ -23,9 +23,7 @@ pipeline {
     stage('Init'){
       steps {
         sh 'env | grep TF_'
-        sh 'export AWS_ACCESS_KEY_ID=d650f5ebe6da045704d77afac6c093f7f53f466f'
-        sh 'export AWS_SECRET_ACCESS_KEY=wZJvha8QMrgJ4MlqHNdX6IbantA6b8xnFcqVf16CJk4='
-        sh 'terragrunt run-all init --terragrunt-non-interactive'
+        sh 'AWS_ACCESS_KEY_ID=d650f5ebe6da045704d77afac6c093f7f53f466f AWS_SECRET_ACCESS_KEY=wZJvha8QMrgJ4MlqHNdX6IbantA6b8xnFcqVf16CJk4= terragrunt run-all init --terragrunt-non-interactive'
       }
     }
 
