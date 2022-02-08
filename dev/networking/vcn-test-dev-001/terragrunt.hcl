@@ -1,5 +1,5 @@
 include {
-  path = find_in_parent_folders()
+  path   = find_in_parent_folders()
   expose = true
 }
 
@@ -8,8 +8,8 @@ terraform {
 }
 
 inputs = {
-    compartment_id   = "ocid1.compartment.oc1..aaaaaaaaf4l2fi7adshwd2pqsrdkwfxx7ffiv3mbvbdsig7si22uphizfmbq" # terraform_demo
-    cidr_blocks  = ["192.168.1.0/24"]
-    display_name = "vcn-test-dev-001"
+  compartment_id = "ocid1.compartment.oc1..aaaaaaaaf4l2fi7adshwd2pqsrdkwfxx7ffiv3mbvbdsig7si22uphizfmbq" # terraform_demo
+  cidr_blocks    = ["192.168.1.0/24"]
+  display_name   = "vcn-test-dev-001"
 }
 
