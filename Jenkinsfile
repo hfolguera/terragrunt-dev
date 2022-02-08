@@ -23,7 +23,9 @@ pipeline {
     stage('Init'){
       steps {
         ansiColor('xterm') {
-          sh 'AWS_ACCESS_KEY_ID=d650f5ebe6da045704d77afac6c093f7f53f466f AWS_SECRET_ACCESS_KEY=wZJvha8QMrgJ4MlqHNdX6IbantA6b8xnFcqVf16CJk4= terragrunt run-all init --terragrunt-non-interactive'
+          withCredentials([usernameColonPassword(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'), usernameColonPassword(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+            sh 'terragrunt run-all init --terragrunt-non-interactive'
+          }
         }
       }
     }
@@ -31,7 +33,7 @@ pipeline {
     stage('Validate'){
       steps {
         ansiColor('xterm') {
-          sh 'AWS_ACCESS_KEY_ID=d650f5ebe6da045704d77afac6c093f7f53f466f AWS_SECRET_ACCESS_KEY=wZJvha8QMrgJ4MlqHNdX6IbantA6b8xnFcqVf16CJk4= terragrunt run-all validate --terragrunt-non-interactive'
+          sh 'terragrunt run-all validate --terragrunt-non-interactive'
         }
       }
     }
@@ -39,7 +41,7 @@ pipeline {
     stage('Format'){
       steps {
         ansiColor('xterm') {
-          sh 'AWS_ACCESS_KEY_ID=d650f5ebe6da045704d77afac6c093f7f53f466f AWS_SECRET_ACCESS_KEY=wZJvha8QMrgJ4MlqHNdX6IbantA6b8xnFcqVf16CJk4= terragrunt hclfmt --terragrunt-check --terragrunt-non-interactive'
+          sh 'terragrunt hclfmt --terragrunt-check --terragrunt-non-interactive'
         }
       }
     }
