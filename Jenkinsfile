@@ -12,8 +12,8 @@ pipeline {
     TF_VAR_user_ocid             = credentials('user_ocid')
     TF_VAR_fingerprint           = credentials('fingerprint')
     TF_VAR_private_key           = credentials('private_key')
-    //AWS_ACCESS_KEY_ID            = credentials('AWS_ACCESS_KEY_ID')
-    //AWS_SECRET_ACCESS_KEY        = credentials('AWS_SECRET_ACCESS_KEY')
+    AWS_ACCESS_KEY_ID            = credentials('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY        = credentials('AWS_SECRET_ACCESS_KEY')
 
     PATH             = "/var/jenkins_home/terraform_temp:${env.PATH}" // Add terraform and terragrunt to PATH
     TF_IN_AUTOMATION = true
@@ -23,9 +23,7 @@ pipeline {
     stage('Init'){
       steps {
         ansiColor('xterm') {
-          withCredentials([usernamePassword(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'), usernamePassword(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-            sh 'terragrunt run-all init --terragrunt-non-interactive'
-          }
+          sh 'terragrunt run-all init --terragrunt-non-interactive'
         }
       }
     }
