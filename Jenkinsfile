@@ -21,6 +21,7 @@ pipeline {
   stages {
     stage('Init'){
       steps {
+        sh 'cd dev'
         sh 'terragrunt run-all init --terragrunt-non-interactive'
       }
     }
