@@ -13,7 +13,7 @@ pipeline {
     TF_VAR_tenancy_ocid          = credentials('tenancy_ocid')
     TF_VAR_user_ocid             = credentials('user_ocid')
     TF_VAR_fingerprint           = credentials('fingerprint')
-    TF_VAR_private_key           = credentials('private_key')
+    private_key                  = credentials('private_key')
     AWS_ACCESS_KEY_ID            = credentials('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY        = credentials('AWS_SECRET_ACCESS_KEY')
 
@@ -49,7 +49,8 @@ pipeline {
     stage('Plan'){
       steps {
         ansiColor('xterm') {
-          sh 'terragrunt run-all plan --terragrunt-non-interactive'
+          sh 'echo $private_key > id_rsa.pem'
+          sh 'TF_VAR_private_key_path=./id_rsa.pem terragrunt run-all plan --terragrunt-non-interactive'
         }
       }
     }
