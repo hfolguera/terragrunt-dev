@@ -13,7 +13,7 @@ pipeline {
     TF_VAR_fingerprint           = credentials('fingerprint')
     TF_VAR_private_key           = credentials('private_key')
     AWS_ACCESS_KEY_ID            = credentials('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY        = credentials('AWS_SECRET_ACCESS_KEY')
+    //AWS_SECRET_ACCESS_KEY        = credentials('AWS_SECRET_ACCESS_KEY')
 
     PATH             = "/var/jenkins_home/terraform_temp:${env.PATH}"
     TF_IN_AUTOMATION = true
@@ -24,6 +24,7 @@ pipeline {
       steps {
         sh 'env | grep TF_'
         sh 'env | grep AWS'
+        sh 'export AWS_SECRET_ACCESS_KEY=wZJvha8QMrgJ4MlqHNdX6IbantA6b8xnFcqVf16CJk4='
         sh 'terragrunt run-all init --terragrunt-non-interactive'
       }
     }
