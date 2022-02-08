@@ -7,6 +7,8 @@ pipeline {
     label 'terragrunt'
   }
 
+  //TODO: Parameters -> Auto-apply? default:No
+
   environment {
     TF_VAR_tenancy_ocid          = credentials('tenancy_ocid')
     TF_VAR_user_ocid             = credentials('user_ocid')
@@ -40,6 +42,23 @@ pipeline {
       steps {
         ansiColor('xterm') {
           sh 'terragrunt hclfmt --terragrunt-check --terragrunt-non-interactive'
+        }
+      }
+    }
+
+    stage('Plan'){
+      steps {
+        ansiColor('xterm') {
+          sh 'terragrunt run-all plan --terragrunt-non-interactive'
+        }
+      }
+    }
+
+    stage('Apply'){
+      steps {
+        input ("Please, review the plan output. Apply configuration?")
+        ansiColor('xterm') {
+          sh 'terragrunt run-all apply --terragrunt-non-interactive'
         }
       }
     }
