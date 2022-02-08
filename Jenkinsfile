@@ -14,24 +14,26 @@ pipeline {
     private_key           = credentials('private_key')
     AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+
+    PATH                  = "/var/jenkins_home/terraform_temp:${env.PATH}"
   }
 
   stages {
     stage('Init'){
       steps {
-        sh '/var/jenkins_home/terraform_temp/terragrunt run-all init --terragrunt-non-interactive'
+        sh 'terragrunt run-all init --terragrunt-non-interactive'
       }
     }
 
     stage('Validate'){
       steps {
-        sh '/var/jenkins_home/terraform_temp/terragrunt run-all validate --terragrunt-non-interactive'
+        sh 'terragrunt run-all validate --terragrunt-non-interactive'
       }
     }
 
     stage('Format'){
       steps {
-        sh '/var/jenkins_home/terraform_temp/terragrunt hfclfmt --terragrunt-check --terragrunt-non-interactive'
+        sh 'terragrunt hfclfmt --terragrunt-check --terragrunt-non-interactive'
       }
     }
   }
