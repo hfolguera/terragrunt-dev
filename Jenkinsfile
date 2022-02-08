@@ -8,14 +8,15 @@ pipeline {
   }
 
   environment {
-    tenancy_ocid          = credentials('tenancy_ocid')
-    user_ocid             = credentials('user_ocid')
-    fingerprint           = credentials('fingerprint')
-    private_key           = credentials('private_key')
-    AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+    TF_VAR_tenancy_ocid          = credentials('tenancy_ocid')
+    TF_VAR_user_ocid             = credentials('user_ocid')
+    TF_VAR_fingerprint           = credentials('fingerprint')
+    TF_VAR_private_key           = credentials('private_key')
+    AWS_ACCESS_KEY_ID            = credentials('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY        = credentials('AWS_SECRET_ACCESS_KEY')
 
-    PATH                  = "/var/jenkins_home/terraform_temp:${env.PATH}"
+    PATH             = "/var/jenkins_home/terraform_temp:${env.PATH}"
+    TF_IN_AUTOMATION = true
   }
 
   stages {
