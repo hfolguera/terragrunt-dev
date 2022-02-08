@@ -30,13 +30,17 @@ pipeline {
 
     stage('Validate'){
       steps {
-        sh 'AWS_ACCESS_KEY_ID=d650f5ebe6da045704d77afac6c093f7f53f466f AWS_SECRET_ACCESS_KEY=wZJvha8QMrgJ4MlqHNdX6IbantA6b8xnFcqVf16CJk4= terragrunt run-all validate --terragrunt-non-interactive'
+        ansiColor('xterm') {
+          sh 'AWS_ACCESS_KEY_ID=d650f5ebe6da045704d77afac6c093f7f53f466f AWS_SECRET_ACCESS_KEY=wZJvha8QMrgJ4MlqHNdX6IbantA6b8xnFcqVf16CJk4= terragrunt run-all validate --terragrunt-non-interactive'
+        }
       }
     }
 
     stage('Format'){
       steps {
-        sh 'AWS_ACCESS_KEY_ID=d650f5ebe6da045704d77afac6c093f7f53f466f AWS_SECRET_ACCESS_KEY=wZJvha8QMrgJ4MlqHNdX6IbantA6b8xnFcqVf16CJk4= terragrunt hfclfmt --terragrunt-check --terragrunt-non-interactive'
+        ansiColor('xterm') {
+          sh 'AWS_ACCESS_KEY_ID=d650f5ebe6da045704d77afac6c093f7f53f466f AWS_SECRET_ACCESS_KEY=wZJvha8QMrgJ4MlqHNdX6IbantA6b8xnFcqVf16CJk4= terragrunt hclfmt --terragrunt-check --terragrunt-non-interactive'
+        }
       }
     }
   }
