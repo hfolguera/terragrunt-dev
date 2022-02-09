@@ -73,7 +73,7 @@ pipeline {
     stage('Approve'){
       when {
         // Skip approval if AutoApply parameter has been set to true
-        expression {AutoApply != 'true'}
+        expression {params.AutoApply != 'true'}
       }
       steps {
         input ("Please, review the plan output. Apply configuration?")
