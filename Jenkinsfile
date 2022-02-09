@@ -18,6 +18,9 @@ pipeline {
   }
 
   //TODO: Parameters -> Auto-apply? default:No
+  parameters {
+    boolean(name: 'AutoApply', description: 'Whether to run apply without approval', defaultValue: true)
+  }
 
   environment {
     TF_VAR_tenancy_ocid          = credentials('tenancy_ocid')
@@ -67,9 +70,18 @@ pipeline {
       }
     }
 
-    stage('Apply'){
+    stage('Approve'){
+      when {
+        // Skip approval if AutoApply parameter has been set to true
+        expression {AutoApply != true}
+      }
       steps {
         input ("Please, review the plan output. Apply configuration?")
+      }
+    }
+
+    stage('Apply'){
+      steps {
         ansiColor('xterm') {
           withCredentials([
             file(credentialsId: 'private_key', variable: 'TF_VAR_private_key_path'),
