@@ -19,7 +19,7 @@ pipeline {
 
   //TODO: Parameters -> Auto-apply? default:No
   parameters {
-    boolean(name: 'AutoApply', description: 'Whether to run apply without approval', defaultValue: true)
+    string(name: 'AutoApply', description: 'Whether to run apply without approval', defaultValue: 'false')
   }
 
   environment {
@@ -73,7 +73,7 @@ pipeline {
     stage('Approve'){
       when {
         // Skip approval if AutoApply parameter has been set to true
-        expression {AutoApply != true}
+        expression {AutoApply != 'true'}
       }
       steps {
         input ("Please, review the plan output. Apply configuration?")
