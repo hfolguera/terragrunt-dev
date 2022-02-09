@@ -17,7 +17,6 @@ pipeline {
     label 'terragrunt'
   }
 
-  //TODO: Parameters -> Auto-apply? default:No
   parameters {
     booleanParam(name: 'AutoApply', description: 'Whether to run apply without approval', defaultValue: false)
   }
