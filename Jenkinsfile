@@ -13,7 +13,6 @@ pipeline {
     TF_VAR_tenancy_ocid          = credentials('tenancy_ocid')
     TF_VAR_user_ocid             = credentials('user_ocid')
     TF_VAR_fingerprint           = credentials('fingerprint')
-    private_key                  = credentials('private_key')
     AWS_ACCESS_KEY_ID            = credentials('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY        = credentials('AWS_SECRET_ACCESS_KEY')
 
@@ -52,8 +51,8 @@ pipeline {
           withCredentials([
             file(credentialsId: 'private_key', variable: 'TF_VAR_private_key_path'),
           ]) {
-            sh 'echo $TF_VAR_private_key_path'
-            sh 'cat $TF_VAR_private_key_path'
+            sh 'env | grep TF_'
+            sh 'env | grep AWS'
             sh 'terragrunt run-all plan --terragrunt-non-interactive'
           }
         }
