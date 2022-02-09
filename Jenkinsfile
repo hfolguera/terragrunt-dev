@@ -49,8 +49,13 @@ pipeline {
     stage('Plan'){
       steps {
         ansiColor('xterm') {
-          sh 'echo $private_key > id_rsa.pem'
-          sh 'TF_VAR_private_key_path=./id_rsa.pem terragrunt run-all plan --terragrunt-non-interactive'
+          withCredentials([
+            file(credentialsId: 'private_key', variable: 'FILE'),
+          ]) {
+            sh 'echo $FILE'
+            sh 'cat $FILE'
+            sh 'terragrunt run-all plan --terragrunt-non-interactive'
+          }
         }
       }
     }
