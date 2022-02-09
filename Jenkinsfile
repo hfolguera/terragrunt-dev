@@ -50,10 +50,10 @@ pipeline {
       steps {
         ansiColor('xterm') {
           withCredentials([
-            file(credentialsId: 'private_key', variable: 'FILE'),
+            file(credentialsId: 'private_key', variable: 'TF_VAR_private_key_path'),
           ]) {
-            sh 'echo $FILE'
-            sh 'cat $FILE'
+            sh 'echo $TF_VAR_private_key_path'
+            sh 'cat $TF_VAR_private_key_path'
             sh 'terragrunt run-all plan --terragrunt-non-interactive'
           }
         }
