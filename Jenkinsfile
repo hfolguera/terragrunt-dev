@@ -1,7 +1,17 @@
 pipeline {
 
   /*
-    Description #TODO
+    This is an example Jenkinsfile with a CI/CD pipeline for Terragrunt repository
+    The steps in this pipeline include:
+    - terragrunt init
+    - terragrunt validate
+    - terragrunt hclfmt
+    - terragrunt plan
+    - terragrunt apply (manual)
+
+    In order to this pipeline work properly your Jenkins environment must satisfy the following requirements:
+    - Have an Agent labeled with terragrunt having terraform and terragrunt binaries installed
+    - OCI Credentials created (All credentials must be 'Secret Text' type, except the private_key_path which has to be 'Secret File')
   */
   agent {
     label 'terragrunt'
@@ -51,8 +61,6 @@ pipeline {
           withCredentials([
             file(credentialsId: 'private_key', variable: 'TF_VAR_private_key_path'),
           ]) {
-            sh 'env | grep TF_'
-            sh 'env | grep AWS'
             sh 'terragrunt run-all plan --terragrunt-non-interactive'
           }
         }
@@ -63,7 +71,11 @@ pipeline {
       steps {
         input ("Please, review the plan output. Apply configuration?")
         ansiColor('xterm') {
-          sh 'terragrunt run-all apply --terragrunt-non-interactive'
+          withCredentials([
+            file(credentialsId: 'private_key', variable: 'TF_VAR_private_key_path'),
+          ]) {
+            sh 'terragrunt run-all apply --terragrunt-non-interactive'
+          }
         }
       }
     }
